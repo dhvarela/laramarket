@@ -89,6 +89,19 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+
+
+
+                <?php
+                    echo "hello world <br/>";
+                    try {
+                        var_dump($_SESSION);
+                    } catch (Exception $e) {
+                        echo $e->getMessage();
+                    }
+
+                ?>
+
             </div>
         </div>
     </body>
