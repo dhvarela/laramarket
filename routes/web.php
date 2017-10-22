@@ -20,4 +20,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/markets', 'MarketController@index');
+Route::get('/markets/{status?}', 'MarketController@index');

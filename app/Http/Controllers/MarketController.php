@@ -8,11 +8,14 @@ use Illuminate\Http\Request;
 
 class MarketController extends Controller
 {
-    public function index()
+    public function index($status='default')
     {
-        $markets = Market::getAllMarkets();
+        if ($status == 'active') {
+            $markets = Market::getActiveMarkets();
+        } else {
+            $markets = Market::getAllMarkets();
+        }
         dd($markets);
-
 
     }
 }
