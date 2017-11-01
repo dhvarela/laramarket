@@ -44,4 +44,16 @@ class MarketsTest extends TestCase
         $markets = Market::getActiveMarkets();
         $this->assertCount(1, $markets);
     }
+
+    public function testMarketsUsingFactories() {
+        $active_markets_amount = 5;
+        factory(Market::class, $active_markets_amount)->create();
+        factory(Market::class)->create(['active' => 0]);
+
+        $active_markets = Market::getActiveMarkets();
+        $this->assertCount($active_markets_amount, $active_markets);
+
+        $markets = Market::getAllMarkets();
+        $this->assertCount($active_markets_amount+1, $markets);
+    }
 }

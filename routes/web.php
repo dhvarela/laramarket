@@ -13,11 +13,15 @@
 
 Route::get('/', function () {
 
-    return view('welcome');
+    //return view('welcome');
+    return redirect('markets');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/markets/create', 'MarketController@create')->name('market-create');
+Route::post('/markets/create', 'MarketController@store')->name('markets.create');
 
 Route::get('/markets/{status?}', 'MarketController@index');

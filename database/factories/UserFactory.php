@@ -23,3 +23,14 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Market::class, function(\Faker\Generator $faker){
+    static $active;
+
+    return [
+        'name'  => $faker->name,
+        'description' => $faker->sentence(5),
+        'active'=> $active ?: 1
+    ];
+
+});
