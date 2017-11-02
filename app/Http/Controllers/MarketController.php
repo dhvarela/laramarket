@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Market;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class MarketController extends Controller
@@ -30,19 +31,27 @@ class MarketController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'  => 'required|max:255|min:5',
-            'description'   => 'required|max:255',
-            'active' => 'bool'
-        ]);
+        $input = $request->all();
 
-        if ($validator->fails()) {
-            return redirect('/markets/create')
-                ->withInput()
-                ->withErrors($validator);
+        $market = new Market();
+
+        if ($market->validate($input)) {
+
+            if(!isset($input['active'])) {
+                $input['active'] = 0;
+            }
+
+            Market::create($request->all());
+
+            Session::flash('status_message', 'Market has been added');
+
+            return redirect('markets');
+
         }
 
-        Market::create($request->all());
-        return redirect('markets');
+        return redirect('/markets/create')
+            ->withInput()
+            ->withErrors($market->errors);
+
     }
 }
