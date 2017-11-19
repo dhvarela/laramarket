@@ -56,4 +56,31 @@ class MarketsTest extends TestCase
         $markets = Market::getAllMarkets();
         $this->assertCount($active_markets_amount+1, $markets);
     }
+
+    public function testFailsValidation() {
+        $input = [];
+
+        $market = new Market($input);
+
+        $valid = $market->validate($input);
+
+        $this->assertFalse($valid);
+        $this->assertArrayHasKey('name', $market->errors->getMessages());
+        $this->assertArrayHasKey('description', $market->errors->getMessages());
+    }
+
+    public function testPassesValidation() {
+        $input = ['name' => 'nombre', 'description' => 'desc'];
+
+        $market = new Market($input);
+
+        $valid = $market->validate($input);
+
+        $this->assertTrue($valid);
+
+        $market->save();
+
+        $active_markets = Market::getActiveMarkets();
+        $this->assertCount(1, $active_markets);
+    }
 }

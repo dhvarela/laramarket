@@ -25,7 +25,7 @@
                                 <div class="input">
                                     <label for="name" class="col-md-4 control-label">Name</label>
                                     <div class="col-md-6">
-                                        <input type="text" name="name" id="market-name" required/>
+                                        <input type="text" name="name" id="market-name" required value="{{old('name')}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
                                 <div class="input">
                                     <label for="name" class="col-md-4 control-label">Description</label>
                                     <div class="col-md-6">
-                                        <input type="text" name="description" id="market-description" required/>
+                                        <input type="text" name="description" id="market-description" required value="{{old('description')}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                                 <div class="input">
                                     <div class="col-md-6 col-md-offset-4">
                                         <label>
-                                            <input type="checkbox" name="active" id="market-active" value="1"/> Active
+                                            <input type="checkbox" name="active" id="market-active" {{ old('active') ? 'checked' : '' }} value="1"/> Active
                                         </label>
                                     </div>
                                 </div>
