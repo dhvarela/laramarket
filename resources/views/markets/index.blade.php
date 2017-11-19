@@ -13,7 +13,14 @@
                         @endif
 
                         @foreach($markets as $market)
-                            <p>{{$market->name}} - {{$market->description}} - {{$market->active}}</p>
+                            <div class="row">
+                                <div class="col-lg-6 col-xs-6">
+                                    <p>{{$market->name}} - {{$market->description}} - {{$market->active ? 'active':'inactive' }}</p>
+                                </div>
+                                <div class="col-lg-6 col-xs-6">
+                                    Show
+                                </div>
+                            </div>
                         @endforeach
                     </div>
                 </div>
