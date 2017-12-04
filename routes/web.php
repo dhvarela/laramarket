@@ -21,10 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/markets/{id}', 'MarketController@show');
-
 Route::get('/markets/create', 'MarketController@create')->name('market-create');
 Route::post('/markets/create', 'MarketController@store')->name('markets.create');
+
+Route::get('/markets/{id}', 'MarketController@show')->name('markets.show');
 
 Route::get('/markets/{id}/edit', 'MarketController@edit');
 Route::put('/markets/{id}/edit', 'MarketController@update')->name('markets.edit');
