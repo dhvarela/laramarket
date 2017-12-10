@@ -32,3 +32,7 @@ Route::put('/markets/{id}/edit', 'MarketController@update')->name('markets.edit'
 Route::delete('/markets/{id}', 'MarketController@destroy')->name('markets.destroy');
 
 Route::get('/markets/{status?}', 'MarketController@index');
+
+Route::get('/stocks', 'StockController@getAllStocks');
+
+
