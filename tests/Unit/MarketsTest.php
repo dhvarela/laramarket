@@ -70,7 +70,7 @@ class MarketsTest extends TestCase
     }
 
     public function testPassesValidation() {
-        $input = ['name' => 'nombre', 'description' => 'desc'];
+        $input = ['name' => 'nombre', 'description' => 'desc', 'acronym' => 'abc10'];
 
         $market = new Market($input);
 

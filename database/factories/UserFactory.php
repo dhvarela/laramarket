@@ -29,6 +29,7 @@ $factory->define(App\Market::class, function(\Faker\Generator $faker){
 
     return [
         'name'  => $faker->name,
+        'acronym'   => substr(uniqid(), 10),
         'description' => $faker->sentence(5),
         'active'=> $active ?: 1
     ];
