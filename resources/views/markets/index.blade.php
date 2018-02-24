@@ -20,6 +20,7 @@
                                 <div class="col-lg-6 col-xs-6">
                                     <div class="pull-right">
                                         <a href="{{ route('markets.show', $market->id)}}" class="btn btn-info">Show</a>
+                                        <a href="{{ route('stocks_by_market', $market->id) }}" class="btn btn-success">Stocks</a>
                                         <a href="{{ route('markets.edit', $market->id)}}" class="btn btn-warning">Edit</a>
                                         <form class="pull-right delete-button" action="{{ route('markets.destroy', $market->id) }}" method="post">
                                             {{ csrf_field() }}

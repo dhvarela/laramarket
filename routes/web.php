@@ -35,4 +35,6 @@ Route::get('/markets/{status?}', 'MarketController@index');
 
 Route::get('/stocks', 'StockController@getAllStocks');
 
+Route::get('/stocks-from-market/{market_id}', 'StockController@getStocksFromMarket')->name('stocks_by_market');
+
 

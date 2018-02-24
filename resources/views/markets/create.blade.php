@@ -29,6 +29,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group {{ $errors->has('acronym') ? 'has-error' : '' }}">
+                                <div class="input">
+                                    <label for="name" class="col-md-4 control-label">Acronym</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="acronym" id="market-acronym" required value="{{old('acronym')}}"/>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                                 <div class="input">
                                     <label for="name" class="col-md-4 control-label">Description</label>

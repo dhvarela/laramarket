@@ -12,4 +12,10 @@ class StockController extends Controller
         $stocks = Stock::getAllStocksAndMarkets();
         dd($stocks->toArray());
     }
+
+    public function getStocksFromMarket($market_id)
+    {
+        $stocks = Stock::getAllStocksFromMarket($market_id);
+        return view('stocks.index', ['stocks' => $stocks]);
+    }
 }

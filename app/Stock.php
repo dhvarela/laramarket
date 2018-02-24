@@ -22,8 +22,20 @@ class Stock extends Model
 
     protected $hidden = ['created_at', 'updated_at'];
 
-    static public function getAllStocksAndMarkets() {
+    // added market entity to each result item
+    static public function getAllStocksAndMarkets()
+    {
         return self::with('market')->get();
+    }
+
+    static public function getAllStocksFromMarket($market_id)
+    {
+        // it can be do with DB:raw() but we would lose databases connectivity
+        return self::with(['market' => function($q) {
+            $q->select('id','name');
+        }])->whereHas('market', function($q) use ($market_id) {
+            $q->where('id',$market_id);
+        })->get();
     }
 
     /**
