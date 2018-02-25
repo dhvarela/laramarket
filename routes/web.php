@@ -37,4 +37,5 @@ Route::get('/stocks', 'StockController@getAllStocks');
 
 Route::get('/stocks-from-market/{market_id}', 'StockController@getStocksFromMarket')->name('stocks_by_market');
 
-Route::resource('stock_historicals', 'StockHistoricalController',['only' => ['index','create']]);
+//Route::resource('stock_historicals', 'StockHistoricalController',['only' => ['index','create']]);
+Route::get('/stock_historicals/{stock}/{method}', 'StockHistoricalController@index');
