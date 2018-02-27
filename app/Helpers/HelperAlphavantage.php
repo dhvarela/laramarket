@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
@@ -39,7 +40,10 @@ class HelperAlphavantage
             }
 
         } catch (RequestException $e) {
-
+            if ($e->hasResponse()) {
+                echo $e->getRequest();
+                return $e->getResponse();
+            }
         }
 
         return $return;
@@ -52,14 +56,29 @@ class HelperAlphavantage
 
     public static function processArray($results)
     {
+        $formatted_array = [];
+
         foreach ($results as $key=>$result) {
             if ($key != 'Meta Data') {
                 if (is_object($result)){
                     foreach ($result as $date => $item) {
-                        // TODO
+                        if (!self::isStockHistoricalFromToday($date)) {
+                            if(preg_match('/\d{4}-\d{2}-\d{2}$/',$date)) {
+                                $string = '4. close';
+                                $formatted_array[$date] = $item->{$string};
+                            }
+                        }
                     }
                 }
             }
         }
+
+        return $formatted_array;
     }
+
+    public static function isStockHistoricalFromToday($stock_date)
+    {
+        return $stock_date == Carbon::today()->toDateString();
+    }
+
 }

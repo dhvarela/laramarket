@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\HelperAlphavantage;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class StockHistoricalController extends Controller
@@ -16,7 +15,11 @@ class StockHistoricalController extends Controller
             'outputsize' => 'compact'
         ];
 
-        dd(HelperAlphavantage::getJsonReply($params));
+        $stock_values = HelperAlphavantage::getArrayReply($params);
+
+        $processedArray = HelperAlphavantage::processArray($stock_values);
+
+        var_dump($processedArray);
     }
 
     public function create()
