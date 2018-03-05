@@ -28,6 +28,20 @@ class Stock extends Model
         return self::with('market')->get();
     }
 
+    static function getStockId($stock)
+    {
+        $output = '';
+
+        $stock = str_replace('.MC', '', $stock);
+
+        $stock_data = self::where('acronym', $stock)->first();
+        if ($stock_data) {
+            $output = $stock_data->getKey();
+        }
+
+        return $output;
+    }
+
     static public function getAllStocksFromMarket($market_id)
     {
         // it can be do with DB:raw() but we would lose databases connectivity

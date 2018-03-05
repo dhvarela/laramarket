@@ -41,7 +41,6 @@ class HelperAlphavantage
 
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                echo $e->getRequest();
                 return $e->getResponse();
             }
         }
@@ -51,10 +50,12 @@ class HelperAlphavantage
 
     public static function getArrayReply ($params)
     {
-        return json_decode(self::getJsonReply($params));
+        $res = self::getJsonReply($params);
+
+        return json_decode($res);
     }
 
-    public static function processArray($results)
+    public static function processArray($results, $multiple_values = false)
     {
         $formatted_array = [];
 
@@ -64,8 +65,12 @@ class HelperAlphavantage
                     foreach ($result as $date => $item) {
                         if (!self::isStockHistoricalFromToday($date)) {
                             if(preg_match('/\d{4}-\d{2}-\d{2}$/',$date)) {
-                                $string = '4. close';
-                                $formatted_array[$date] = $item->{$string};
+                                if ($multiple_values) {
+                                    $string = '4. close';
+                                    $formatted_array[$date] = $item->{$string};
+                                } else {
+                                    $formatted_array[$date] = end($item);
+                                }
                             }
                         }
                     }
