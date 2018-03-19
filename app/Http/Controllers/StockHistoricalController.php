@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\HelperAlphavantage;
+use App\Helpers\HelperChart;
 use App\Stock;
 use App\StockHistorical;
 use Barryvdh\Debugbar\LaravelDebugbar;
 use DebugBar\DebugBar;
 use Illuminate\Http\Request;
-use Khill\Lavacharts\Lavacharts;
 
 class StockHistoricalController extends Controller
 {
@@ -63,40 +63,25 @@ class StockHistoricalController extends Controller
 
     public function stockHistoricalGraph($stock_id)
     {
-        $lava = new Lavacharts;
+        echo HelperChart::generateStockChart($stock_id);
 
-        $data = $lava->DataTable();
+    }
 
-        $data->addDateColumn('Day of Month')
-            ->addNumberColumn('Value')
-            ->addNumberColumn('SMA6')
-            ->addNumberColumn('SMA70')
-            ->addNumberColumn('SMA200');
+    public function getStockHistoricalInfo($stock_id)
+    {
+        $stock_name = Stock::getStockName($stock_id);
+        $stock_data = Stock::find($stock_id);
+        $stock_historical = StockHistorical::getStockHistorical($stock_id);
+        $stock_chart = HelperChart::generateStockChart($stock_id);
 
-        $stock_values = StockHistorical::where('stock_id', $stock_id)->get();
-
-        foreach ($stock_values as $stock_value) {
-            $data->addRow([
-                $stock_value->date,
-                $stock_value->value,
-                $stock_value->avg_6,
-                $stock_value->avg_70,
-                $stock_value->avg_200,
-            ]);
-        }
-
-        $lava->LineChart('StockPrices', $data, [
-            'titleTextStyle'    => [
-                'fontName'  => 'Verdana',
-                'fontColor' => 'blue',
-            ],
-            'title' => 'Gráfico de cortes' . Stock::getStockName($stock_id),
-            'legend'=> ['position' => 'bottom']
-        ]);
-
-        echo '<div id="stocks-chart"></div>';
-        echo $lava->render('LineChart', 'StockPrices','stocks-chart');
-
+        return view('stock_historicals.index')
+            ->withTitle('Historical ' . $stock_name)
+            ->with(
+                [
+                    'stock_data'        => $stock_data,
+                    'stock_historical'  => $stock_historical,
+                    'stock_chart'       => $stock_chart
+                ]);
     }
 
     private function _getStockClosingValues($stock)

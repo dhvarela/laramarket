@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+{{--<div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -16,9 +16,6 @@
                                 {{$stock->id}} - {{$stock->name}} - {{$stock->acronym}}
                             </div>
                             <div class="col-lg-6 col-xs-6">
-                                <div class="btn-group">
-                                    <a href="{{ route('stock_historicals_chart',$stock->id) }}" class="btn btn-info">View</a>
-                                </div>
                             </div>
                         </li>
                     @endforeach
@@ -27,5 +24,5 @@
             </div>
         </div>
     </div>
-</div>
+</div>--}}
 @endsection

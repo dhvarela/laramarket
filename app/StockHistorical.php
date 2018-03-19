@@ -36,6 +36,20 @@ class StockHistorical extends Model
         'avg_200' => 'required|numeric',
     ];
 
+    public static function getStockHistorical($stock_id, $start_date = null, $end_date = null)
+    {
+        $query = self::where('stock_id', $stock_id);
+
+        if (!is_null($start_date)) {
+            $query->where('date', '>=', $start_date);
+        }
+        if (!is_null($end_date)) {
+            $query->where('date', '<=', $start_date);
+        }
+
+        $query->orderBy('date','DESC')->get();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
