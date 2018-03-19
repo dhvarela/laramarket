@@ -28,9 +28,9 @@ class StockHistorical extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     protected $rules = [
-        'stock_id' => 'required|integer',
+        'stock_id' => 'required|integer|unique_with:stock_historicals,date',
         'date' => 'required|date_format:Y-m-d',
-        'price' => 'required|numeric|unique_with:stock_historicals,date,value',
+        'price' => 'required|numeric',
         'avg_6' => 'required|numeric',
         'avg_70' => 'required|numeric',
         'avg_200' => 'required|numeric',

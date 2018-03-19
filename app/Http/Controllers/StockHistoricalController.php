@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Helpers\HelperAlphavantage;
 use App\Stock;
 use App\StockHistorical;
+use Barryvdh\Debugbar\LaravelDebugbar;
+use DebugBar\DebugBar;
 use Illuminate\Http\Request;
+use Khill\Lavacharts\Lavacharts;
 
 class StockHistoricalController extends Controller
 {
@@ -51,10 +54,49 @@ class StockHistoricalController extends Controller
 
                     echo "\n Saved values of $stock from date: $date \n";
                 } else {
-                    echo "$stock_historical->errors\n\n";
+                    echo "error<br>";
+                    \Debugbar::warning($stock_historical->errors);
                 }
             }
         }
+    }
+
+    public function stockHistoricalGraph($stock_id)
+    {
+        $lava = new Lavacharts;
+
+        $data = $lava->DataTable();
+
+        $data->addDateColumn('Day of Month')
+            ->addNumberColumn('Value')
+            ->addNumberColumn('SMA6')
+            ->addNumberColumn('SMA70')
+            ->addNumberColumn('SMA200');
+
+        $stock_values = StockHistorical::where('stock_id', $stock_id)->get();
+
+        foreach ($stock_values as $stock_value) {
+            $data->addRow([
+                $stock_value->date,
+                $stock_value->value,
+                $stock_value->avg_6,
+                $stock_value->avg_70,
+                $stock_value->avg_200,
+            ]);
+        }
+
+        $lava->LineChart('StockPrices', $data, [
+            'titleTextStyle'    => [
+                'fontName'  => 'Verdana',
+                'fontColor' => 'blue',
+            ],
+            'title' => 'Gráfico de cortes' . Stock::getStockName($stock_id),
+            'legend'=> ['position' => 'bottom']
+        ]);
+
+        echo '<div id="stocks-chart"></div>';
+        echo $lava->render('LineChart', 'StockPrices','stocks-chart');
+
     }
 
     private function _getStockClosingValues($stock)

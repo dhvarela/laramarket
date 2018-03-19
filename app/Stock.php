@@ -52,6 +52,15 @@ class Stock extends Model
         })->get();
     }
 
+    public static function getStockName($stock_id)
+    {
+        $stock = self::where('id', $stock_id)->first();
+        if ($stock) {
+            return $stock->name;
+        }
+        return '';
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
