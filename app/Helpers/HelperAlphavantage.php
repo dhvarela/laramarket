@@ -51,8 +51,11 @@ class HelperAlphavantage
     public static function getArrayReply ($params)
     {
         $res = self::getJsonReply($params);
-
-        return json_decode($res);
+        try {
+            return json_decode($res);
+        } catch (\Exception $e) {
+            return $res;
+        }
     }
 
     public static function processArray($results, $multiple_values = false)
