@@ -40,22 +40,24 @@ class StockHistoricalController extends Controller
             $stock_historical = new StockHistorical();
 
             foreach ($stock_values_processed as $date => $stock_value) {
-                $input = [
-                    'stock_id' => $stock_id,
-                    'date' => $date,
-                    'price' => $stock_value,
-                    'avg_6' => $sma_6_processed[$date],
-                    'avg_70' => $sma_70_processed[$date],
-                    'avg_200' => $sma_200_processed[$date],
-                ];
+                if(isset($sma_6_processed[$date]) && isset($sma_70_processed[$date]) && isset($sma_200_processed[$date])) {
+                    $input = [
+                        'stock_id' => $stock_id,
+                        'date' => $date,
+                        'price' => $stock_value,
+                        'avg_6' => $sma_6_processed[$date],
+                        'avg_70' => $sma_70_processed[$date],
+                        'avg_200' => $sma_200_processed[$date],
+                    ];
 
-                if ($stock_historical->validate($input)) {
-                    $stock_historical_save = StockHistorical::create($input);
+                    if ($stock_historical->validate($input)) {
+                        $stock_historical_save = StockHistorical::create($input);
 
-                    echo "\n Saved values of $stock from date: $date \n";
-                } else {
-                    echo "error<br>";
-                    \Debugbar::warning($stock_historical->errors);
+                        echo "\n Saved values of $stock from date: $date \n";
+                    } else {
+                        echo "error<br>";
+                        \Debugbar::warning($stock_historical->errors);
+                    }
                 }
             }
         }

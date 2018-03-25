@@ -40,5 +40,5 @@ Route::get('/stocks-from-market/{market_id}', 'StockController@getStocksFromMark
 //Route::resource('stock_historicals', 'StockHistoricalController',['only' => ['index','create']]);
 Route::get('/stock_historicals/{stock}/{method}', 'StockHistoricalController@index');
 Route::get('/save_stock_historicals/{stock}', 'StockHistoricalController@saveStockHistoricals');
-Route::get('/save_stock_historicals_charts/{stock_id}', 'StockHistoricalController@stockHistoricalGraph')->name('stock_historicals_chart');
-Route::get('/stock_historical/{stock_id}', 'StockHistoricalController@getStockHistoricalInfo')->name('get_stock_historicals_info');
+Route::get('/save_stock_historicals_charts/{stock_id}', 'StockHistoricalController@stockHistoricalGraph')->name('get_stock_historicals_info');
+Route::get('/stock_historical/{stock_id}', 'StockHistoricalController@getStockHistoricalInfo')->name('stock_historicals_chart');

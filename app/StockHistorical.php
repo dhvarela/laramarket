@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\ValidationTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -50,6 +51,13 @@ class StockHistorical extends Model
         }
 
         return $query->orderBy('date','DESC')->get();
+    }
+
+    public static function StockHasAlreadyBeSavedToday($stock_id)
+    {
+        return (bool)self::where('stock_id', $stock_id)
+            ->whereDate('created_at', Carbon::now()->toDateString())
+            ->count();
     }
 
     /**
