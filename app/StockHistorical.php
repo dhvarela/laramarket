@@ -27,6 +27,8 @@ class StockHistorical extends Model
     protected $fillable = ['stock_id', 'date', 'price', 'avg_6', 'avg_70', 'avg_200'];
     protected $hidden = ['created_at', 'updated_at'];
 
+    protected $dates = ['date'];
+
     protected $rules = [
         'stock_id' => 'required|integer|unique_with:stock_historicals,date',
         'date' => 'required|date_format:Y-m-d',
@@ -47,7 +49,7 @@ class StockHistorical extends Model
             $query->where('date', '<=', $start_date);
         }
 
-        $query->orderBy('date','DESC')->get();
+        return $query->orderBy('date','DESC')->get();
     }
 
     /**

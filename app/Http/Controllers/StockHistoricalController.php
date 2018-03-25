@@ -69,8 +69,8 @@ class StockHistoricalController extends Controller
 
     public function getStockHistoricalInfo($stock_id)
     {
-        $stock_name = Stock::getStockName($stock_id);
         $stock_data = Stock::find($stock_id);
+        $stock_name = $stock_data->name;
         $stock_historical = StockHistorical::getStockHistorical($stock_id);
         $stock_chart = HelperChart::generateStockChart($stock_id);
 
@@ -79,7 +79,7 @@ class StockHistoricalController extends Controller
             ->with(
                 [
                     'stock_data'        => $stock_data,
-                    'stock_historical'  => $stock_historical,
+                    'stock_historicals' => $stock_historical,
                     'stock_chart'       => $stock_chart
                 ]);
     }
