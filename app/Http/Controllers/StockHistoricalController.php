@@ -54,6 +54,11 @@ class StockHistoricalController extends Controller
                         $stock_historical_save = StockHistorical::create($input);
 
                         echo "\n Saved values of $stock from date: $date \n";
+
+                        if (HelperAlphavantage::isStockHistoricalFromToday($date)) {
+                            event('App\Events\Intersection', $stock_historical_save);
+                        }
+
                     } else {
                         echo "error<br>";
                         \Debugbar::warning($stock_historical->errors);

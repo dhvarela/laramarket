@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         $filePath = storage_path('logs/crontab.log');
 
         $schedule->command('stock_historicals:get_data')
-            ->everyFiveMinutes()
+            ->dailyAt('18:00')
             ->sendOutputTo($filePath);
     }
 

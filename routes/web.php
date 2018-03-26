@@ -42,3 +42,8 @@ Route::get('/stock_historicals/{stock}/{method}', 'StockHistoricalController@ind
 Route::get('/save_stock_historicals/{stock}', 'StockHistoricalController@saveStockHistoricals');
 Route::get('/save_stock_historicals_charts/{stock_id}', 'StockHistoricalController@stockHistoricalGraph')->name('get_stock_historicals_info');
 Route::get('/stock_historical/{stock_id}', 'StockHistoricalController@getStockHistoricalInfo')->name('stock_historicals_chart');
+
+Route::get('/stock_historical/{stock_id}/intersect', function() {
+    $stock = App\StockHistorical::find(276);
+    event('App\Events\Intersection', $stock);
+});
