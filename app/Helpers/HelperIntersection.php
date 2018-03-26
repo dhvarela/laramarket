@@ -13,6 +13,7 @@ class HelperIntersection
 {
     static public function checkIntersection ($stock_values)
     {
+        $icon = $message = '';
         $margin = config('larastock.intersection_margin');
         $avg_6_crosses_avg_70 = abs($stock_values->avg_70 - $stock_values->avg_6) <= $margin;
         $avg_6_bigger_avg_70 = $stock_values->avg_6 >= $stock_values->avg_70;
@@ -38,6 +39,19 @@ class HelperIntersection
             }
         }
 
+
         return [$icon, $message];
+    }
+
+    static function getIntersections ($stock_historicals)
+    {
+        foreach ($stock_historicals as $key=>$stock_values) {
+            $stock_historical[$key]['intersection'] = '';
+            list($icon, $message) = self::checkIntersection($stock_values);
+            if (!empty($icon)) {
+                $stock_historical[$key]['intersection'] =
+                    '<span class="glyphicon ' .$icon . '" title="' .$message .'"></span>';
+            }
+        }
     }
 }

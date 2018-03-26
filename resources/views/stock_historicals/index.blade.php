@@ -23,6 +23,7 @@
                                 <th>SMA6</th>
                                 <th>SMA70</th>
                                 <th>SMA200</th>
+                                <th>Intersection</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +34,7 @@
                                 <td>{{$stock->avg_6}}</td>
                                 <td>{{$stock->avg_70}}</td>
                                 <td>{{$stock->avg_200}}</td>
+                                <td>{!! $stock->intersection !!}</td>
                             </tr>
                         @endforeach
                         </tbody>

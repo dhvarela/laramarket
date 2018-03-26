@@ -32,7 +32,7 @@ class HelperChart
         foreach ($stock_values as $stock_value) {
             $data->addRow([
                 $stock_value->date,
-                $stock_value->value,
+                $stock_value->price,
                 $stock_value->avg_6,
                 $stock_value->avg_70,
                 $stock_value->avg_200,

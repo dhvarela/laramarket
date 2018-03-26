@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\HelperAlphavantage;
 use App\Helpers\HelperChart;
+use App\Helpers\HelperIntersection;
 use App\Stock;
 use App\StockHistorical;
 use Barryvdh\Debugbar\LaravelDebugbar;
@@ -80,6 +81,8 @@ class StockHistoricalController extends Controller
         $stock_name = $stock_data->name;
         $stock_historical = StockHistorical::getStockHistorical($stock_id);
         $stock_chart = HelperChart::generateStockChart($stock_id);
+
+        HelperIntersection::getIntersections($stock_historical);
 
         return view('stock_historicals.index')
             ->withTitle('Historical ' . $stock_name)
