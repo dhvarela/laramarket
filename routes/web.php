@@ -47,3 +47,7 @@ Route::get('/stock_historical/{stock_id}/intersect', function() {
     $stock = App\StockHistorical::find(276);
     event('App\Events\Intersection', $stock);
 });
+
+Route::post('user_stocks', 'UserStocksController@store')->name('user_stocks.create');
+Route::delete('user_stocks', 'UserStocksController@destroy')->name('user_stocks.destroy');
+
