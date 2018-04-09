@@ -24,8 +24,18 @@ class UserStocks extends Model
 
     protected $rules = [
         'user_id' => 'required|integer',
-        'stock_id' => 'required|integer|exists:stocks, id|unique_with:user_stocks,user_id,stock_id',
+        'stock_id' => 'required|integer|exists:stocks,id|unique_with:user_stocks,user_id,stock_id',
     ];
+
+    public static function getUserStocks($user_id)
+    {
+        return self::where('user_id', $user_id)->get()->KeyBy('stock_id')->toArray();
+    }
+
+    public static function getStockFollowers($stock_id)
+    {
+        return self::where('stock_id', $stock_id)->get()->pluck('user_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

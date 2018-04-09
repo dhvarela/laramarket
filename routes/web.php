@@ -51,3 +51,8 @@ Route::get('/stock_historical/{stock_id}/intersect', function() {
 Route::post('user_stocks', 'UserStocksController@store')->name('user_stocks.create');
 Route::delete('user_stocks', 'UserStocksController@destroy')->name('user_stocks.destroy');
 
+Route::get('send_test_email', function () {
+    Mail::raw('Send test mail', function ($message){
+        $message->to('danilarastock@mailinator.com');
+    });
+});

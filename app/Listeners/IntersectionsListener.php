@@ -4,6 +4,9 @@ namespace App\Listeners;
 
 use App\Events\Intersections;
 use App\Helpers\HelperIntersection;
+use App\Notifications\StockIntersection;
+use App\User;
+use App\UserStocks;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -43,9 +46,14 @@ class IntersectionsListener
         list($icon, $message) = HelperIntersection::checkIntersection($stock_values);
 
         if (!empty ($message)) {
-            // check user stocks
 
-            // notify
+            $stock_followers = UserStocks::getStockFollowers($stock_values->stock_id);
+
+            foreach ($stock_followers as $follower_id) {
+                $user = User::find($follower_id);
+                $user->notify(new StockIntersection($stock_values, $message));
+
+            }
         }
 
     }

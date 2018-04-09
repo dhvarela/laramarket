@@ -32,12 +32,22 @@
                                 <div class="pull-right">
                                     <div class="btn-group">
                                         @if (Auth::check())
+                                            @if (in_array($stock->id, $user_stocks))
+                                                <form action="{{route('user_stocks.destroy')}}" method="post">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <input type="hidden" name="stock_id" id="stock_id" value="{{$stock->id}}">
+                                                    <button type="submit" class="btn btn-danger">Unsubscribe</button>
+
+                                                </form>
+                                            @else
                                             <form action="{{route('user_stocks.create')}}" method="post">
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="stock_id" id="stock_id" value="{{$stock->id}}">
                                                 <button type="submit" class="btn btn-primary">Subscribe</button>
 
                                             </form>
+                                            @endif
                                         @endif
                                     </div>
                                     <div class="btn-group">
