@@ -53,6 +53,6 @@ Route::delete('user_stocks', 'UserStocksController@destroy')->name('user_stocks.
 
 Route::get('send_test_email', function () {
     Mail::raw('Send test mail', function ($message){
-        $message->to('danilarastock@mailinator.com');
+        $message->to('alfa@sandbox49e691de7b2243458a19188da2576e35.mailgun.org');
     });
 });
